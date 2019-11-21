@@ -5,8 +5,57 @@ const fileSystem = require("fs");
 const keys = require("./keys.js");
 
 
+
+
+const divider = "=====================================================================================";
+
+
+
+const findMovie = (movie = "Mr Nobody") => {
+
+
+  // * Title of the movie.
+// * Year the movie came out.
+// * IMDB Rating of the movie.
+// * Rotten Tomatoes Rating of the movie.
+// * Country where the movie was produced.
+// * Language of the movie.
+// * Plot of the movie.
+// * Actors in the movie.
+// If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+
+
+
+  axios.get("http://www.omdbapi.com/?t="+ movie +"&y=&plot=short&apikey=trilogy").then(
+  function(response) {
+
+
+    let getback = response.data;
+   
+    console.log(`
+${divider}
+Name: ${getback.Title}
+Year: ${getback.Year}
+IMDB rating: ${getback.imdbRating}
+Rotten Tomatoes rating: ${getback.Ratings[1].Value}
+Country of origin: ${getback.Country}
+Language: ${getback.Language}
+Plot: ${getback.Plot}
+Starring: ${getback.Actors}
+${divider}`);
+
+  }
+);
+
+
+
+
+}
+
 const command = process.argv[2];
-const query = process.argv[3];
+const query = process.argv[3]?process.argv.slice(3).join(" "):undefined;
+
+
 
 if (command === "concert-this"){
 
@@ -73,33 +122,10 @@ else if (command === "movie-this"){
 
   // movie-this      omdb needs axios for api no package needed default to Mr nobody
 
-// * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
-// If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-
-axios.get("http://www.omdbapi.com/?t="+ query +"&y=&plot=short&apikey=trilogy").then(
-  function(response) {
-   
-
-    console.log("The movie's rating is: " + response.data.imdbRating);
-    // console.log("The movie's rating is: " + response.data.imdbRating);
-    // console.log("The movie's rating is: " + response.data.imdbRating);
-    // console.log("The movie's rating is: " + response.data.imdbRating);
-    // console.log("The movie's rating is: " + response.data.imdbRating);
-    // console.log("The movie's rating is: " + response.data.imdbRating);
-  }
-);
 
 
 
-
+findMovie(query);
 
 }
 
