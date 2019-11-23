@@ -4,6 +4,45 @@ const axios = require("axios");
 const fileSystem = require("fs");
 const keys = require("./keys.js");
 
+const doWhat = () => {
+
+
+  fileSystem.readFile("random.txt", (err,data) => {
+
+
+
+
+    let command  = data.toString().split(",")[0];
+    let query = data.toString().split(",")[1];
+    const { exec } = require('child_process');
+    
+    
+    exec(`node liri ${command} ${query}`, (err, stdout,stderr) => {
+    
+    
+      if (err) {
+    
+        console.log(`stderr: ${stderr}`);
+        throw err;
+    
+      }
+    
+    
+      console.log(`stdout: ${stdout}`);
+    
+     
+    
+    
+    });
+    
+    
+    
+    
+    });
+
+
+}
+
 
 
 
@@ -44,15 +83,6 @@ const query = process.argv[3]?process.argv.slice(3).join(" "):undefined;
 
 const findSong = (song = "The Sign ace of base") =>{
 
-  
-
-  // spotify-this-song   
- 
- // Artist(s)
- // The song's name
- // A preview link of the song from Spotify
- // The album that the song is from
- // If no song is provided then your program will default to "The Sign" by Ace of Base.
  
  let spotify = new Spotify(keys.spotify);
  
@@ -133,7 +163,7 @@ axios.get(bandsintown).then(
     
 
     
-  } //Disclosure that the following code is reusued from someone else to see why im having issues with this APIs 
+  } //Disclosure that the following code is reusued from someone else to see why im having issues with this API
 ).catch(function(err) {
   if (err.response) {
       
@@ -155,17 +185,6 @@ axios.get(bandsintown).then(
     }
     console.log(err.config);
   })};
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -193,8 +212,9 @@ findMovie(query);
 
 else if (command === "do-what-it-says"){
 
-  // do-what-it-says use fs to make the content of random.txt the fourth argument
 
+  
+  doWhat();
 
 
 
@@ -209,7 +229,7 @@ Error: The only valid LIRI commands are the following:
 concert-this [music artist]
 spotify-this-song [song name]
 movie-this [movie name]
-do-what-it-says
+do-what-it-says - must have command and query separated by a ',' in random.txt
 ******************************************************
 `)}
 
