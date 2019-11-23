@@ -13,19 +13,6 @@ const divider = "===============================================================
 
 const findMovie = (movie = "Mr Nobody") => {
 
-
-  // * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
-// If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
-
-
-
   axios.get("http://www.omdbapi.com/?t="+ movie +"&y=&plot=short&apikey=trilogy").then(
   function(response) {
 
@@ -47,9 +34,6 @@ ${divider}`);
   }
 );
 
-
-
-
 }
 
 const command = process.argv[2];
@@ -57,8 +41,59 @@ const query = process.argv[3]?process.argv.slice(3).join(" "):undefined;
 
 
 
-if (command === "concert-this"){
 
+const findSong = (song = "The Sign ace of base") =>{
+
+  
+
+  // spotify-this-song   
+ 
+ // Artist(s)
+ // The song's name
+ // A preview link of the song from Spotify
+ // The album that the song is from
+ // If no song is provided then your program will default to "The Sign" by Ace of Base.
+ 
+ let spotify = new Spotify(keys.spotify);
+ 
+ 
+ spotify.search({
+   type: "track",
+   query: song,
+   limit: 1
+ })
+ .then(function(response) {
+   let result = response.tracks.items;
+   for (let i = 0; i < result.length; i++) {
+     resultData =
+ 
+ `
+ ${divider}
+ Artists: ${result[i].artists[i].name}
+ 
+ Track:   ${result[i].name}
+ 
+ Preview: ${result[i].preview_url}
+ 
+ Album    ${result[i].album.name}
+ ${divider}
+ `
+     console.log(resultData);
+     
+   }
+ })
+ .catch(function(err) {
+   console.log(err);
+ });
+ 
+ 
+ 
+ 
+ 
+ }
+
+
+const findConcert = (concert) => {
 
   // concert-this     bands in town api
 
@@ -66,16 +101,79 @@ if (command === "concert-this"){
 // Venue location
 // Date of the Event (use moment to format this as "MM/DD/YYYY")
 
+let bandsintown = `https://rest.bandsintown.com/artists/pitbull/events?app_id=codingbootcamp`;
+console.log(bandsintown);
 
 
-
-
-axios.get("https://rest.bandsintown.com/artists/" + "Nickelback" + "/events?app_id=codingbootcamp").then(
+axios.get(bandsintown).then(
   function(response) {
-    // Then we print out the imdbRating
-    console.log(response.outputData);
-  }
-);
+
+    const getback =response.data;
+
+
+
+  const venueData = 
+  `
+  Venue: ${getback[0]}
+  City:  ${getback[0]}
+  State: ${getback[0]}
+  
+  `;
+
+  console.log(venueData);
+
+
+
+
+    
+   
+  
+      console.log(response.data.venue.artistname);
+
+    
+
+    
+  } //Disclosure that the following code is reusued from someone else to see why im having issues with this APIs 
+).catch(function(err) {
+  if (err.response) {
+      
+      console.log("---------------Data---------------");
+      console.log(err.response.data);
+      console.log("---------------Status---------------");
+      console.log(err.response.status);
+      console.log("---------------Status---------------");
+      console.log(err.response.headers);
+    } else if (err.request) {
+      
+
+
+      console.log(err.request);
+    } else {
+
+
+      console.log("err", err.message);
+    }
+    console.log(err.config);
+  })};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (command === "concert-this"){
+
+
+findConcert(query);
 
 
 
@@ -84,47 +182,11 @@ axios.get("https://rest.bandsintown.com/artists/" + "Nickelback" + "/events?app_
 }
 else if (command === "spotify-this-song"){
 
-
-
-  // spotify-this-song   
-
-// Artist(s)
-// The song's name
-// A preview link of the song from Spotify
-// The album that the song is from
-// If no song is provided then your program will default to "The Sign" by Ace of Base.
-
-let spotify = new Spotify(keys.spotify);
-
-
-spotify.search({
-  type: 'track',
-  query: query
- }, function(err, data) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
-  }
+findSong(query);
  
- console.log(data.tracks.items[0]); 
-// console.log(data.tracks.items[0]); 
-// console.log(data.tracks.items[0]); 
-// console.log(data.tracks.items[0]); 
-});
-
-
-
-
-
 }
 
 else if (command === "movie-this"){
-
-
-  // movie-this      omdb needs axios for api no package needed default to Mr nobody
-
-
-
-
 findMovie(query);
 
 }
@@ -141,13 +203,14 @@ else if (command === "do-what-it-says"){
 
 
 else {console.log(`
+******************************************************
 Error: The only valid LIRI commands are the following:
 
 concert-this [music artist]
 spotify-this-song [song name]
 movie-this [movie name]
 do-what-it-says
-
+******************************************************
 `)}
 
 
