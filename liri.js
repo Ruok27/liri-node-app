@@ -3,6 +3,7 @@ const Spotify = require('node-spotify-api');
 const axios = require("axios");
 const fileSystem = require("fs");
 const keys = require("./keys.js");
+const moment = require('moment')
 
 const doWhat = () => {
 
@@ -99,13 +100,10 @@ const findSong = (song = "The Sign ace of base") => {
 
           `
  ${divider}
- Artists: ${result[i].artists[i].name}
- 
- Track:   ${result[i].name}
- 
- Preview: ${result[i].preview_url}
- 
- Album:    ${result[i].album.name}
+ Artists: ${result[i].artists[i].name} 
+ Track:   ${result[i].name} 
+ Preview: ${result[i].preview_url} 
+ Album:   ${result[i].album.name}
  ${divider}
  `
         console.log(resultData);
@@ -125,66 +123,36 @@ const findSong = (song = "The Sign ace of base") => {
 
 const findConcert = (concert) => {
 
-  // concert-this     bands in town api
-
-  // Name of the venue
-  // Venue location
-  // Date of the Event (use moment to format this as "MM/DD/YYYY")
-
-  let bandsintown = `https://rest.bandsintown.com/artists/pitbull/events?app_id=codingbootcamp`;
+  let bandsintown = `https://rest.bandsintown.com/artists/${concert}/events?app_id=codingbootcamp`;
   console.log(bandsintown);
-
 
   axios.get(bandsintown).then(
     function (response) {
 
-      const getback = response.data;
+      const getback = response.data[0];
 
-
-
-      const venueData =
-        `
-  Venue: ${getback[0]}
-  City:  ${getback[0]}
-  State: ${getback[0]}
-  
-  `;
-
-      console.log(venueData);
+      console.log(`
+${divider}
+${query} will perform at 
+${getback.venue.name} in ${getback.venue.city}, ${getback.venue.region}
+on ${moment(getback.datetime).format('MM/DD/YYYY')}
+${divider}
+`);
 
 
 
 
 
-
-
-      console.log(response.data.venue.artistname);
-
-
-
-
-    } //Disclosure that the following code is reusued from someone else to see why im having issues with this API
-  ).catch(function (err) {
-    if (err.response) {
-
-      console.log("---------------Data---------------");
-      console.log(err.response.data);
-      console.log("---------------Status---------------");
-      console.log(err.response.status);
-      console.log("---------------Status---------------");
-      console.log(err.response.headers);
-    } else if (err.request) {
-
-
-
-      console.log(err.request);
-    } else {
-
-
-      console.log("err", err.message);
     }
-    console.log(err.config);
-  })
+  ).catch(function (err) {
+    if (err) {
+      console.log(`
+*************************************************************
+${query} has no upcoming events currently, try another search
+*************************************************************`);
+    }
+  }
+  )
 };
 
 
