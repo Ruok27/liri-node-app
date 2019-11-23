@@ -5,6 +5,8 @@ const fileSystem = require("fs");
 const keys = require("./keys.js");
 const moment = require('moment')
 
+
+
 const doWhat = () => {
 
 
@@ -47,7 +49,11 @@ const doWhat = () => {
 
 
 
-const divider = "=====================================================================================";
+const divider = `
+
+=====================================================================================
+
+`;
 
 
 
@@ -115,6 +121,9 @@ const findSong = (song = "The Sign ace of base") => {
     });
 
 
+    
+
+
 
 
 
@@ -154,6 +163,16 @@ ${query} has no upcoming events currently, try another search
   }
   )
 };
+
+if (process.argv[2]){
+
+  fileSystem.appendFile("log.txt", `${divider} ${process.argv[2]} ${query} \n\n`, err => {
+  
+  
+  if (err) throw err;
+  
+  })
+  }
 
 
 
