@@ -105,7 +105,7 @@ const findSong = (song = "The Sign ace of base") => {
  
  Preview: ${result[i].preview_url}
  
- Album    ${result[i].album.name}
+ Album:    ${result[i].album.name}
  ${divider}
  `
         console.log(resultData);
