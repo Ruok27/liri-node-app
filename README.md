@@ -1,6 +1,6 @@
 ###Overview
 
-This is a simple a node.js application that I have wrote to demonstrate the ability utilize APIs. This App gathers information about either a music track, a movie, or a concert. Additionally, it will be able to run these commands if they are written in a txt.   
+This is a simple node.js application that I have wrote to demonstrate the use of several APIS. This app gathers information about either a music track, a movie, or a concert event. Additionally, it will be able to run these commands if they are written in a txt named random.txt.   
 
 ###Application structure
 The app is dependent on the following packages: env, Axios and Spotify. 
@@ -14,7 +14,7 @@ node liri.js spotify-this-song [song name]
 node liri.js movie-this [movie name]
 node liri.js do-what-it-says
 
-note: for do-what-it-says, must have located in the folder’s root a txt file named random.txt. Within that file must be a command and query separated by a ',' 
+note: for do-what-it-says, must have located in the folder’s root a txt file named random.txt. Within that file there must be a command and query separated by a ',' 
 
 
 ###Images of application in use
