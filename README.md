@@ -30,7 +30,21 @@ note: for do-what-it-says, must have located in the folder’s root a txt file n
 
 ###Images of application in use
 
-<img src="movie.PNG"/>
+Use of movie feature with no specified argument
+<img src="movieDefault.PNG"/>
+Use of movie feature with a specified argument
+<img src="movieNoDefault.PNG"/>
 
+Use of Spotify feature
 <img src="spotify.PNG"/>
+
+Use of concert search feature
+<img src="concert.PNG"/>
+
+File being written to log used arguments
+<img src="log.PNG"/>
+
+The "do-what-says" feature being used 
+<img src="random.PNG"/>
+<img src="do.PNG"/>
 
